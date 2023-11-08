@@ -1,4 +1,4 @@
-package top.jonakls.cgmedic.backend.storage;
+package top.jonakls.cgmedic.core.storage;
 
 import com.google.gson.Gson;
 import top.jonakls.cgmedic.api.entity.MedicEntity;

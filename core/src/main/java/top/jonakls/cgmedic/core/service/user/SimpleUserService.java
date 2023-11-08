@@ -1,4 +1,4 @@
-package top.jonakls.cgmedic.backend.service.user;
+package top.jonakls.cgmedic.core.service.user;
 
 import top.jonakls.cgmedic.api.entity.MedicEntity;
 import top.jonakls.cgmedic.api.service.MedicService;

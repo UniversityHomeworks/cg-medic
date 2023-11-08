@@ -50,7 +50,7 @@
         </dependency>
         <dependency>
             <groupId>top.jonakls</groupId>
-            <artifactId>backend</artifactId>
+            <artifactId>core</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

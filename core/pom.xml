@@ -6,7 +6,7 @@
         <artifactId>cg-medic</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>backend</artifactId>
+    <artifactId>core</artifactId>
     <name>backend</name>
     <build>
         <plugins>

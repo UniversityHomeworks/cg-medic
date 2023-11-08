@@ -16,6 +16,6 @@
     <modules>
         <module>api</module>
         <module>frontend</module>
-        <module>backend</module>
+        <module>core</module>
     </modules>
 </project>
