@@ -1,4 +1,4 @@
-package top.jonakls.cgmedic.frontend.login;
+package top.jonakls.cgmedic.app.login;
 
 public class Test {
 

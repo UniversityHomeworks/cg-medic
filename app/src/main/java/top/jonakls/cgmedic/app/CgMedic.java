@@ -1,11 +1,11 @@
-package top.jonakls.cgmedic.frontend;
+package top.jonakls.cgmedic.app;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
 public class CgMedic {
 
     /**
-     * The main method for CgMedic frontend program
+     * The main method for CgMedic app program
      *
      * @param args the arguments
      */

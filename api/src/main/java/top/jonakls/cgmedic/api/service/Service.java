@@ -2,9 +2,7 @@ package top.jonakls.cgmedic.api.service;
 
 public interface Service {
 
-    default void start() {
-        // Nothing to do here
-    }
+    void start();
 
     default void stop() {
         // Nothing to do here

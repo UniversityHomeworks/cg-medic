@@ -1,7 +1,6 @@
 package top.jonakls.cgmedic.api.entity.user;
 
 import top.jonakls.cgmedic.api.entity.MedicEntity;
-import top.jonakls.cgmedic.api.entity.role.RoleEntity;
 import top.jonakls.cgmedic.api.entity.user.history.HistoryEntity;
 
 import java.util.Iterator;
@@ -20,17 +19,14 @@ public class UserEntity implements MedicEntity {
     private String address;
     private String city;
     private final Map<String, HistoryEntity> history;
-    private RoleEntity role;
 
     public UserEntity(
-            String uuid, RoleEntity roleEntity,
-            String name, String secondName,
+            String uuid, String name, String secondName,
             String lastName, String secondLastName,
             String email, String phone,
             String address, String city
     ) {
         this.uuid = uuid;
-        this.role = roleEntity == null ? RoleEntity.PATIENT : roleEntity;
         this.name = name;
         this.secondName = secondName;
         this.lastName = lastName;
@@ -42,19 +38,32 @@ public class UserEntity implements MedicEntity {
         this.history = new ConcurrentHashMap<>();
     }
 
+    public UserEntity(
+            String uuid, String name, String lastName,
+            String email, String phone
+    ) {
+        this.uuid = uuid;
+        this.name = name;
+        this.secondName = "";
+        this.lastName = lastName;
+        this.secondLastName = "";
+        this.email = email;
+        this.phone = phone;
+        this.address = "";
+        this.city = "";
+        this.history = new ConcurrentHashMap<>();
+    }
+
+    public static UserEntity createBasic(
+            String uuid, String name, String lastName,
+            String email, String phone
+    ) {
+        return new UserEntity(uuid, name, lastName, email, phone);
+    }
+
     @Override
     public String uuid() {
         return uuid;
-    }
-
-    @Override
-    public RoleEntity role() {
-        return this.role;
-    }
-
-    @Override
-    public void setRole(RoleEntity role) {
-        this.role = role;
     }
 
     @Override
@@ -147,6 +156,10 @@ public class UserEntity implements MedicEntity {
 
     public void removeHistory(String uuid) {
         this.history.remove(uuid);
+    }
+
+    public boolean hasHistory(String uuid) {
+        return this.history.containsKey(uuid);
     }
 
     public HistoryEntity getHistory(String uuid) {

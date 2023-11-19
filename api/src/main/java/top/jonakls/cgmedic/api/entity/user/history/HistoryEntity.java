@@ -31,6 +31,20 @@ public class HistoryEntity {
         this.medicines = medicines;
     }
 
+    public static HistoryEntity createHistory(
+            String uuid, DoctorEntity doctor,
+            String date, String description,
+            String diagnosis, String treatment,
+            List<String> diseases, List<String> medicines
+    ) {
+        return new HistoryEntity(
+                uuid, doctor,
+                date, description,
+                diagnosis, treatment,
+                diseases, medicines
+        );
+    }
+
     public String uuid() {
         return uuid;
     }

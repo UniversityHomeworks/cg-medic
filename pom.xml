@@ -15,7 +15,7 @@
 
     <modules>
         <module>api</module>
-        <module>frontend</module>
+        <module>app</module>
         <module>core</module>
     </modules>
 </project>

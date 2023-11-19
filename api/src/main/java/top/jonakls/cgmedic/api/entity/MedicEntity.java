@@ -1,14 +1,10 @@
 package top.jonakls.cgmedic.api.entity;
 
-import top.jonakls.cgmedic.api.entity.role.RoleEntity;
+import top.jonakls.cgmedic.api.cache.Cacheable;
 
-public interface MedicEntity {
+public interface MedicEntity extends Cacheable {
 
     String uuid();
-
-    RoleEntity role();
-
-    void setRole(RoleEntity role);
 
     String name();
 

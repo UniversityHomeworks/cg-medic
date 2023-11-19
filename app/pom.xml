@@ -6,7 +6,7 @@
         <artifactId>cg-medic</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>frontend</artifactId>
+    <artifactId>app</artifactId>
     <name>frontend</name>
     <build>
         <plugins>
@@ -33,7 +33,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>top.jonakls.cgmedic.frontend.CgMedic</mainClass>
+                            <mainClass>top.jonakls.cgmedic.app.CgMedic</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

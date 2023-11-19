@@ -1,29 +1,30 @@
 package top.jonakls.cgmedic.api.service;
 
-import top.jonakls.cgmedic.api.entity.MedicEntity;
+import top.jonakls.cgmedic.api.cache.Cacheable;
 
-import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
-public interface MedicService extends Service {
+public interface MedicService<T extends Cacheable> extends Service {
 
     void load(String uuid);
 
-    MedicEntity save(String uuid);
+    T save(String uuid);
 
-    MedicEntity delete(String uuid);
+    T delete(String uuid);
 
-    void update(MedicEntity medic);
+    T deleteOfCache(String uuid);
 
-    MedicEntity get(String uuid);
+    void add(T medic);
 
-    Optional<MedicEntity> getOptional(String uuid);
+    void update(T medic);
 
-    //TODO: add method for getting all entities from json database
-    //List<MedicEntity> getAll();
+    T get(String uuid);
 
-    Map<UUID, MedicEntity> getAll();
+    Optional<T> getOptional(String uuid);
 
-    void saveAll(Map<UUID, MedicEntity> medics);
+    void saveAll();
+
+    default void start() {
+        // Nothing to do here
+    }
 }
