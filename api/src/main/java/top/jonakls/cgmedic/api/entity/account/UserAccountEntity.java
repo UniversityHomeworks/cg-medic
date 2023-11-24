@@ -4,8 +4,7 @@ import top.jonakls.cgmedic.api.cache.Cacheable;
 import top.jonakls.cgmedic.api.entity.MedicEntity;
 import top.jonakls.cgmedic.api.entity.role.RoleEntity;
 import top.jonakls.cgmedic.api.entity.user.UserEntity;
-
-import java.util.UUID;
+import top.jonakls.cgmedic.api.util.PasswordUtil;
 
 public class UserAccountEntity implements Cacheable {
 
@@ -29,23 +28,10 @@ public class UserAccountEntity implements Cacheable {
     public static UserAccountEntity createUser(String nickname, String email, String password,
                                                String name, String secondName, String phone
     ) {
-        String uuid = UUID.randomUUID().toString();
-
         return new UserAccountEntity(
-                uuid, nickname, email, password,
-                new UserEntity(uuid, name, secondName, email, phone),
+                nickname, nickname, email, PasswordUtil.encode(password),
+                new UserEntity(nickname, name, secondName, email, phone),
                 RoleEntity.PATIENT
-        );
-    }
-
-    public static UserAccountEntity createMedic(
-            String uuid, String nickname, String email, String password,
-            String name, String secondName, String phone
-    ) {
-        return new UserAccountEntity(
-                uuid, nickname, email, password,
-                new UserEntity(uuid, name, secondName, email, phone),
-                RoleEntity.MEDIC
         );
     }
 
@@ -71,11 +57,11 @@ public class UserAccountEntity implements Cacheable {
     }
 
     public String password() {
-        return password;
+        return this.password;
     }
 
     public void password(String password) {
-        this.password = password;
+        this.password = PasswordUtil.encode(password);
     }
 
     public MedicEntity userEntity() {

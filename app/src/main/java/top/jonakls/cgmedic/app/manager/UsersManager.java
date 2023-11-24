@@ -6,15 +6,13 @@ import top.jonakls.cgmedic.core.storage.ObjectJsonStorage;
 
 public class UsersManager {
 
-    private SimpleAccountService accountService;
-    private ObjectJsonStorage<UserAccountEntity> storage;
+    private final SimpleAccountService accountService;
 
     public UsersManager(String path) {
-        this.storage = new ObjectJsonStorage<>(path);
-        this.accountService = new SimpleAccountService(storage);
-
-
-
+        this.accountService = new SimpleAccountService(new ObjectJsonStorage<>(path));
     }
 
+    public SimpleAccountService accountService() {
+        return accountService;
+    }
 }

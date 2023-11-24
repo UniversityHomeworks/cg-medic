@@ -1,82 +1,71 @@
-package top.jonakls.cgmedic.app.history;
+package top.jonakls.cgmedic.app.history.user;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import top.jonakls.cgmedic.api.entity.user.UserEntity;
+import top.jonakls.cgmedic.api.entity.account.UserAccountEntity;
+import top.jonakls.cgmedic.core.service.entity.account.SimpleAccountService;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.util.Locale;
 
-public class History extends JFrame {
-
-
-    private JPanel panel1;
-    private JTextPane historyUserTextPane;
+public class UserHistory extends JFrame {
+    private JTextField uuidTextField;
+    private JPanel infoPanenl;
     private JLabel userName;
+    private JTextField userNameTextFile;
     private JLabel textSecondName;
     private JTextField secondNameTextFile;
     private JLabel textLastName;
     private JTextField lastNameTextFiled;
-    private JTextField userNameTextFile;
-    private JPanel infoPanenl;
-    private JComboBox comboBox1;
-    private JComboBox comboBox2;
-    private JTextField secondLastNameTextFiled;
-    private JTextField emailTextFiled;
     private JLabel textSecondLastName;
+    private JTextField secondLastNameTextFiled;
     private JLabel textEmail;
-    private JTextField phoneTextFiled;
+    private JTextField emailTextFiled;
     private JLabel textPhone;
+    private JTextField phoneTextFiled;
     private JTextField addressTextField;
     private JComboBox cityComBox;
-    private JPanel history;
-    private JTextArea description;
-    private JTextArea diagnosis;
+    private JComboBox comboBox1;
+    private JComboBox comboBox2;
     private JLabel textDescription;
+    private JTextArea description;
     private JLabel textDiagnosis;
+    private JTextArea diagnosis;
+    private JLabel textTratment;
+    private JLabel textDiseasses;
     private JComboBox diseasses;
     private JTextArea tratment;
     private JComboBox medicines;
-    private JLabel textTratment;
-    private JLabel textDiseasses;
+    private JButton backButton;
+    private JButton nextButton;
+    private JButton exitButton;
+    private JPanel generalPanel;
 
-    private JButton infoHistory;
+    private UserAccountEntity userAccountEntity;
+    private SimpleAccountService simpleAccountService;
 
-    private JButton stopOperation;
-    private JTextField uuidTextField;
-
-
-    public History() {
-        super("History");
-        super.setContentPane(panel1);
-        super.setSize(720, 1000);
-
-
-        infoHistory.addActionListener(e -> {
-            String id = uuidTextField.getText();
-            String userName = userNameTextFile.getText();
-            String userSecondName = secondNameTextFile.getText();
-            String userLastName = lastNameTextFiled.getText();
-            String userSecondLastName = secondLastNameTextFiled.getText();
-            String userEmail = emailTextFiled.getText();
-            String userPhone = phoneTextFiled.getText();
-            String userAddress = addressTextField.getText();
-            String userCity = (String) cityComBox.getSelectedItem();
+    public UserHistory(UserAccountEntity userAccountEntity, SimpleAccountService simpleAccountService) {
+        super("CgMedic - Historial Clinico de " + userAccountEntity.nickname());
+        super.setContentPane(this.generalPanel);
+        super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        super.setLocationRelativeTo(null);
+        super.setSize(800, 600);
+        this.userAccountEntity = userAccountEntity;
+        this.simpleAccountService = simpleAccountService;
 
 
-            UserEntity.createBasic(id, userName, userLastName, userEmail, userPhone);
-            showMessageDialog(userName);
-            dispose();
+        backButton.addActionListener(e -> {
+
         });
-    }
+        nextButton.addActionListener(e -> {
 
-    private void showMessageDialog(String userName) {
-        JOptionPane.showMessageDialog(this, "¡Informacion Guardada, " + userName + "!", "Gracias", JOptionPane.INFORMATION_MESSAGE);
-        this.dispose();
+        });
+        exitButton.addActionListener(e -> super.dispose());
     }
 
     {
@@ -94,21 +83,25 @@ public class History extends JFrame {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
-        panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(7, 6, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.setBackground(new Color(-3479560));
+        generalPanel = new JPanel();
+        generalPanel.setLayout(new GridLayoutManager(5, 4, new Insets(0, 0, 0, 0), -1, -1));
+        generalPanel.setBackground(new Color(-3479560));
+        generalPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createRaisedBevelBorder(), null, TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, null, null));
         final JLabel label1 = new JLabel();
         Font label1Font = this.$$$getFont$$$("Century Gothic", Font.BOLD, 14, label1.getFont());
         if (label1Font != null) label1.setFont(label1Font);
         label1.setForeground(new Color(-16777216));
         label1.setText("Codigo del hitorial");
-        panel1.add(label1, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final Spacer spacer1 = new Spacer();
-        panel1.add(spacer1, new GridConstraints(2, 1, 4, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        generalPanel.add(label1, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        uuidTextField = new JTextField();
+        uuidTextField.setBackground(new Color(-1));
+        uuidTextField.setEditable(false);
+        uuidTextField.setForeground(new Color(-16777216));
+        generalPanel.add(uuidTextField, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         infoPanenl = new JPanel();
-        infoPanenl.setLayout(new GridLayoutManager(8, 2, new Insets(0, 0, 0, 0), -1, -1));
+        infoPanenl.setLayout(new GridLayoutManager(11, 3, new Insets(0, 0, 0, 0), -1, -1));
         infoPanenl.setBackground(new Color(-3479560));
-        panel1.add(infoPanenl, new GridConstraints(2, 2, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        generalPanel.add(infoPanenl, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         userName = new JLabel();
         userName.setEnabled(true);
         Font userNameFont = this.$$$getFont$$$("Century Gothic", Font.BOLD, 14, userName.getFont());
@@ -118,6 +111,7 @@ public class History extends JFrame {
         infoPanenl.add(userName, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         userNameTextFile = new JTextField();
         userNameTextFile.setBackground(new Color(-1));
+        userNameTextFile.setEditable(false);
         userNameTextFile.setForeground(new Color(-16777216));
         userNameTextFile.setText("");
         infoPanenl.add(userNameTextFile, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -129,6 +123,7 @@ public class History extends JFrame {
         infoPanenl.add(textSecondName, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         secondNameTextFile = new JTextField();
         secondNameTextFile.setBackground(new Color(-1));
+        secondNameTextFile.setEditable(false);
         secondNameTextFile.setForeground(new Color(-16777216));
         infoPanenl.add(secondNameTextFile, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         textLastName = new JLabel();
@@ -139,6 +134,7 @@ public class History extends JFrame {
         infoPanenl.add(textLastName, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lastNameTextFiled = new JTextField();
         lastNameTextFiled.setBackground(new Color(-1));
+        lastNameTextFiled.setEditable(false);
         lastNameTextFiled.setForeground(new Color(-16777216));
         infoPanenl.add(lastNameTextFiled, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         textSecondLastName = new JLabel();
@@ -149,6 +145,7 @@ public class History extends JFrame {
         infoPanenl.add(textSecondLastName, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         secondLastNameTextFiled = new JTextField();
         secondLastNameTextFiled.setBackground(new Color(-1));
+        secondLastNameTextFiled.setEditable(false);
         secondLastNameTextFiled.setForeground(new Color(-16777216));
         infoPanenl.add(secondLastNameTextFiled, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         textEmail = new JLabel();
@@ -159,6 +156,7 @@ public class History extends JFrame {
         infoPanenl.add(textEmail, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         emailTextFiled = new JTextField();
         emailTextFiled.setBackground(new Color(-1));
+        emailTextFiled.setEditable(false);
         emailTextFiled.setForeground(new Color(-16777216));
         infoPanenl.add(emailTextFiled, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         textPhone = new JLabel();
@@ -169,6 +167,7 @@ public class History extends JFrame {
         infoPanenl.add(textPhone, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         phoneTextFiled = new JTextField();
         phoneTextFiled.setBackground(new Color(-1));
+        phoneTextFiled.setEditable(false);
         phoneTextFiled.setForeground(new Color(-16777216));
         infoPanenl.add(phoneTextFiled, new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label2 = new JLabel();
@@ -179,6 +178,7 @@ public class History extends JFrame {
         infoPanenl.add(label2, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         addressTextField = new JTextField();
         addressTextField.setBackground(new Color(-1));
+        addressTextField.setEditable(false);
         addressTextField.setForeground(new Color(-16777216));
         infoPanenl.add(addressTextField, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label3 = new JLabel();
@@ -189,6 +189,8 @@ public class History extends JFrame {
         infoPanenl.add(label3, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cityComBox = new JComboBox();
         cityComBox.setBackground(new Color(-1));
+        cityComBox.setEditable(false);
+        cityComBox.setEnabled(false);
         cityComBox.setForeground(new Color(-16777216));
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         defaultComboBoxModel1.addElement("Seleccione");
@@ -197,28 +199,30 @@ public class History extends JFrame {
         defaultComboBoxModel1.addElement("Cali");
         cityComBox.setModel(defaultComboBoxModel1);
         infoPanenl.add(cityComBox, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
-        panel2.setBackground(new Color(-3479560));
-        panel1.add(panel2, new GridConstraints(3, 2, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setBackground(new Color(-3479560));
+        infoPanenl.add(panel1, new GridConstraints(8, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label4 = new JLabel();
         Font label4Font = this.$$$getFont$$$("Century Gothic", Font.BOLD, 14, label4.getFont());
         if (label4Font != null) label4.setFont(label4Font);
         label4.setForeground(new Color(-16777216));
         label4.setText("Sexo");
-        panel2.add(label4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-        panel3.setBackground(new Color(-3479560));
-        panel2.add(panel3, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel1.add(label4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.setBackground(new Color(-3479560));
+        panel1.add(panel2, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label5 = new JLabel();
         Font label5Font = this.$$$getFont$$$("Century Gothic", Font.BOLD, 14, label5.getFont());
         if (label5Font != null) label5.setFont(label5Font);
         label5.setForeground(new Color(-16777216));
         label5.setText("Estado civil");
-        panel3.add(label5, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(label5, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         comboBox1 = new JComboBox();
         comboBox1.setBackground(new Color(-1));
+        comboBox1.setEditable(false);
+        comboBox1.setEnabled(false);
         comboBox1.setForeground(new Color(-16777216));
         final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
         defaultComboBoxModel2.addElement("Seleccione");
@@ -227,9 +231,10 @@ public class History extends JFrame {
         defaultComboBoxModel2.addElement("Union libre");
         defaultComboBoxModel2.addElement("Otros");
         comboBox1.setModel(defaultComboBoxModel2);
-        panel3.add(comboBox1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(comboBox1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         comboBox2 = new JComboBox();
         comboBox2.setBackground(new Color(-1));
+        comboBox2.setEnabled(false);
         comboBox2.setForeground(new Color(-16777216));
         final DefaultComboBoxModel defaultComboBoxModel3 = new DefaultComboBoxModel();
         defaultComboBoxModel3.addElement("Seleccione");
@@ -237,21 +242,22 @@ public class History extends JFrame {
         defaultComboBoxModel3.addElement("Femenino");
         defaultComboBoxModel3.addElement("Otros");
         comboBox2.setModel(defaultComboBoxModel3);
-        panel2.add(comboBox2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JPanel panel4 = new JPanel();
-        panel4.setLayout(new GridLayoutManager(5, 2, new Insets(0, 0, 0, 0), -1, -1));
-        panel4.setBackground(new Color(-3479560));
-        panel1.add(panel4, new GridConstraints(4, 2, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel1.add(comboBox2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new GridLayoutManager(6, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.setBackground(new Color(-3479560));
+        infoPanenl.add(panel3, new GridConstraints(9, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         textDescription = new JLabel();
         Font textDescriptionFont = this.$$$getFont$$$("Century Gothic", Font.BOLD, 14, textDescription.getFont());
         if (textDescriptionFont != null) textDescription.setFont(textDescriptionFont);
         textDescription.setForeground(new Color(-16777216));
         textDescription.setText("Descripcion");
-        panel4.add(textDescription, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(textDescription, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
-        panel4.add(scrollPane1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel3.add(scrollPane1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         description = new JTextArea();
         description.setBackground(new Color(-1));
+        description.setEditable(false);
         description.setForeground(new Color(-16777216));
         scrollPane1.setViewportView(description);
         textDiagnosis = new JLabel();
@@ -259,25 +265,27 @@ public class History extends JFrame {
         if (textDiagnosisFont != null) textDiagnosis.setFont(textDiagnosisFont);
         textDiagnosis.setForeground(new Color(-16777216));
         textDiagnosis.setText("Diagnostico");
-        panel4.add(textDiagnosis, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(textDiagnosis, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         diagnosis = new JTextArea();
         diagnosis.setBackground(new Color(-1));
+        diagnosis.setEditable(false);
         diagnosis.setForeground(new Color(-16777216));
-        panel4.add(diagnosis, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        panel3.add(diagnosis, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         textTratment = new JLabel();
         Font textTratmentFont = this.$$$getFont$$$("Century Gothic", Font.BOLD, 14, textTratment.getFont());
         if (textTratmentFont != null) textTratment.setFont(textTratmentFont);
         textTratment.setForeground(new Color(-16777216));
         textTratment.setText("Tratamiento");
-        panel4.add(textTratment, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(textTratment, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         textDiseasses = new JLabel();
         Font textDiseassesFont = this.$$$getFont$$$("Century Gothic", Font.BOLD, 14, textDiseasses.getFont());
         if (textDiseassesFont != null) textDiseasses.setFont(textDiseassesFont);
         textDiseasses.setForeground(new Color(-16777216));
         textDiseasses.setText("Enfermedades");
-        panel4.add(textDiseasses, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(textDiseasses, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         diseasses = new JComboBox();
         diseasses.setBackground(new Color(-1));
+        diseasses.setEnabled(false);
         diseasses.setForeground(new Color(-16777216));
         final DefaultComboBoxModel defaultComboBoxModel4 = new DefaultComboBoxModel();
         defaultComboBoxModel4.addElement("Seleccione");
@@ -287,19 +295,21 @@ public class History extends JFrame {
         defaultComboBoxModel4.addElement("Sinusitis");
         defaultComboBoxModel4.addElement("Infección urinaria");
         diseasses.setModel(defaultComboBoxModel4);
-        panel4.add(diseasses, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(diseasses, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tratment = new JTextArea();
         tratment.setBackground(new Color(-1));
+        tratment.setEditable(false);
         tratment.setForeground(new Color(-16777216));
-        panel4.add(tratment, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        panel3.add(tratment, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         final JLabel label6 = new JLabel();
         Font label6Font = this.$$$getFont$$$("Century Gothic", Font.BOLD, 14, label6.getFont());
         if (label6Font != null) label6.setFont(label6Font);
         label6.setForeground(new Color(-16777216));
         label6.setText("Medicina");
-        panel4.add(label6, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(label6, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         medicines = new JComboBox();
         medicines.setBackground(new Color(-1));
+        medicines.setEnabled(false);
         medicines.setForeground(new Color(-16777216));
         final DefaultComboBoxModel defaultComboBoxModel5 = new DefaultComboBoxModel();
         defaultComboBoxModel5.addElement("Selesccione");
@@ -310,31 +320,44 @@ public class History extends JFrame {
         defaultComboBoxModel5.addElement("Trimeton");
         defaultComboBoxModel5.addElement("Allegra");
         medicines.setModel(defaultComboBoxModel5);
-        panel4.add(medicines, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JPanel panel5 = new JPanel();
-        panel5.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-        panel5.setBackground(new Color(-3479560));
-        panel1.add(panel5, new GridConstraints(5, 2, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        infoHistory = new JButton();
-        infoHistory.setText("Guardar");
-        panel5.add(infoHistory, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        stopOperation = new JButton();
-        stopOperation.setText("Cancelar");
-        panel5.add(stopOperation, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        uuidTextField = new JTextField();
-        uuidTextField.setBackground(new Color(-1));
-        uuidTextField.setForeground(new Color(-16777216));
-        panel1.add(uuidTextField, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        panel3.add(medicines, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel4 = new JPanel();
+        panel4.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel4.setBackground(new Color(-3479560));
+        panel3.add(panel4, new GridConstraints(5, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        backButton = new JButton();
+        backButton.setBackground(new Color(-14918244));
+        Font backButtonFont = this.$$$getFont$$$("Century Gothic", Font.BOLD, 14, backButton.getFont());
+        if (backButtonFont != null) backButton.setFont(backButtonFont);
+        backButton.setForeground(new Color(-1));
+        backButton.setText("Atras");
+        panel4.add(backButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        nextButton = new JButton();
+        nextButton.setBackground(new Color(-14918244));
+        nextButton.setEnabled(true);
+        Font nextButtonFont = this.$$$getFont$$$("Century Gothic", Font.BOLD, 14, nextButton.getFont());
+        if (nextButtonFont != null) nextButton.setFont(nextButtonFont);
+        nextButton.setForeground(new Color(-1));
+        nextButton.setHideActionText(true);
+        nextButton.setText("Siguiente");
+        panel4.add(nextButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        exitButton = new JButton();
+        exitButton.setBackground(new Color(-14918244));
+        Font exitButtonFont = this.$$$getFont$$$("Century Gothic", Font.BOLD, 14, exitButton.getFont());
+        if (exitButtonFont != null) exitButton.setFont(exitButtonFont);
+        exitButton.setForeground(new Color(-1));
+        exitButton.setText("Salir");
+        panel4.add(exitButton, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer1 = new Spacer();
+        generalPanel.add(spacer1, new GridConstraints(1, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final Spacer spacer2 = new Spacer();
-        panel1.add(spacer2, new GridConstraints(0, 1, 1, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        generalPanel.add(spacer2, new GridConstraints(1, 0, 3, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
-        panel1.add(spacer3, new GridConstraints(0, 0, 6, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        generalPanel.add(spacer3, new GridConstraints(4, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final Spacer spacer4 = new Spacer();
-        panel1.add(spacer4, new GridConstraints(1, 4, 5, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        generalPanel.add(spacer4, new GridConstraints(3, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final Spacer spacer5 = new Spacer();
-        panel1.add(spacer5, new GridConstraints(6, 0, 1, 5, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        final Spacer spacer6 = new Spacer();
-        panel1.add(spacer6, new GridConstraints(1, 5, 5, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        generalPanel.add(spacer5, new GridConstraints(0, 0, 1, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
     }
 
     /**
@@ -363,6 +386,7 @@ public class History extends JFrame {
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {
-        return panel1;
+        return generalPanel;
     }
+
 }

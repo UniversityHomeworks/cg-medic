@@ -26,11 +26,11 @@ public class SimpleAccountService implements MedicService<UserAccountEntity> {
 
 
     @Override
-    public void load(String uuid) {
-        UserAccountEntity userAccountEntity = this.objectCache.get(uuid);
+    public void load(String name) {
+        UserAccountEntity userAccountEntity = this.objectCache.get(name);
 
         if (userAccountEntity == null) {
-            userAccountEntity = this.objectStorage.findSync(uuid, UserAccountEntity.class);
+            userAccountEntity = this.objectStorage.findSync(name, UserAccountEntity.class);
 
             if (userAccountEntity != null) {
                 this.objectCache.add(userAccountEntity);
@@ -64,6 +64,7 @@ public class SimpleAccountService implements MedicService<UserAccountEntity> {
     @Override
     public void add(UserAccountEntity medic) {
         this.objectCache.add(medic);
+        this.save(medic.uuid());
     }
 
     @Override

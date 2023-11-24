@@ -2,6 +2,7 @@ package top.jonakls.cgmedic.test;
 
 import org.junit.Assert;
 import org.junit.Test;
+import top.jonakls.cgmedic.api.entity.MedicEntity;
 import top.jonakls.cgmedic.api.entity.account.UserAccountEntity;
 import top.jonakls.cgmedic.api.entity.user.UserEntity;
 import top.jonakls.cgmedic.api.entity.user.history.HistoryEntity;

@@ -4,100 +4,125 @@ package top.jonakls.cgmedic.app.login;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import top.jonakls.cgmedic.app.history.History;
+import top.jonakls.cgmedic.api.entity.account.UserAccountEntity;
+import top.jonakls.cgmedic.api.util.PasswordUtil;
+import top.jonakls.cgmedic.app.history.doctor.FormHistory;
+import top.jonakls.cgmedic.app.history.user.UserHistory;
+import top.jonakls.cgmedic.app.register.UserRegister;
+import top.jonakls.cgmedic.app.util.GenericUtil;
+import top.jonakls.cgmedic.core.service.entity.account.SimpleAccountService;
 
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Insets;
-import java.util.HashMap;
+import java.awt.*;
 import java.util.Locale;
-import java.util.Map;
 
 public class UserLogin extends JFrame {
 
-    private static final Map<String, String> USERS = new HashMap<>();
-
-
     private JPanel panel1;
-
     private JLabel usernameLabel;
-
     private JTextField userNameFile;
-
     private JLabel passwordLabel;
-
     private JPasswordField passwordField;
-
     private JButton loginButton;
-
     private JButton exitButton;
-
     private JButton registerButton;
+    private final SimpleAccountService accountService;
 
 
-    public UserLogin() {
-        super("Login");
-        // Usuarios registrados (simulados)
-        USERS.put("hola", "12345");// Usuario de ejemplo (simulado)
-
-        setContentPane(panel1);
-        setSize(600, 400);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-
+    public UserLogin(SimpleAccountService accountService) {
+        super("CgMedic | Inicio de sesión");
+        this.accountService = accountService;
+        super.setContentPane(panel1);
+        super.setSize(600, 400);
+        super.setLocationRelativeTo(null);
+        super.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         registerButton.addActionListener(e -> {
-            String userName = userNameFile.getText();
-            String password = String.valueOf(passwordField.getPassword());
-            if (!USERS.containsKey(userName)) {
-                // Agregar nuevo usuario al registro (simulado)
-                USERS.put(userName, password);
-                JOptionPane.showMessageDialog(UserLogin.this, "Usuario registrado exitosamente", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(UserLogin.this, "El usuario ya existe", "Error de Registro", JOptionPane.ERROR_MESSAGE);
-            }
+            UserRegister register = new UserRegister(this.accountService);
+            register.setVisible(true);
+            register.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            this.dispose();
         });
 
         loginButton.addActionListener(e -> {
             String userName = userNameFile.getText();
             String password = String.valueOf(passwordField.getPassword());
-            if (USERS.containsKey(userName) && USERS.get(userName).equals(password)) {
-                dispose();// Cerrar ventana de inicio de sesión
-                showWelcomeMessage(userName);// Mostrar mensaje de bienvenida en nueva ventana
-
-                History historyWindow = new History();
-                historyWindow.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE); // Ajusta la operación de cierre según tu lógica
-                historyWindow.setLocationRelativeTo(null);
-                historyWindow.setVisible(true); // Muestra la ventana History
-            } else {
-                JOptionPane.showMessageDialog(UserLogin.this, "Credenciales incorrectas", "Error de Inicio de Sesión", JOptionPane.ERROR_MESSAGE);
-            }
+            this.loginProcess(userName, password);
         });
 
         exitButton.addActionListener(e -> this.dispose());
     }
 
+    private void loginProcess(String userName, String password) {
+        UserAccountEntity user = this.accountService.get(userName);
 
-    private void showWelcomeMessage(String userName) {
-        JOptionPane.showMessageDialog(
-                this,
-                "¡Inicio de Sesión Exitoso! Bienvenido, " + userName + "!",
-                "Bienvenido",
-                JOptionPane.INFORMATION_MESSAGE
-        );
+        if (user == null) {
+            this.accountService.load(userName);
+            user = this.accountService.get(userName);
+
+            if (user == null) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "El usuario " + userName + " no existe.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+        }
+
+        if (!PasswordUtil.compare(password, user.password())) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Contraseña incorrecta.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        GenericUtil.showWelcomeMessage(this, userName);
+        System.out.println(user.role());
+
+        switch (user.role()) {
+            case ADMIN:
+                System.out.println("Admin");
+                GenericUtil.showInfoMessage(
+                        this,
+                        "Lamentamos informarles que los desarrolladores no han implementado una interfaz para el rol ADMIN.\nSeguramente están gastando su salario"
+                );
+                break;
+            case MEDIC:
+                this.sendToMedicHistory(user);
+                break;
+            case PATIENT:
+                this.sendToUserHistory(user);
+                break;
+            default:
+                JOptionPane.showMessageDialog(
+                        this,
+                        "El usuario " + userName + " no tiene un rol asignado.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                break;
+        }
+
     }
 
+    private void sendToUserHistory(UserAccountEntity user) {
+        UserHistory history = new UserHistory(user, this.accountService);
+        history.setVisible(true);
+        this.dispose();
+    }
+
+    private void sendToMedicHistory(UserAccountEntity user) {
+        FormHistory history = new FormHistory(user, this.accountService);
+        history.setVisible(true);
+        this.dispose();
+    }
 
     {
 // GUI initializer generated by IntelliJ IDEA GUI Designer
@@ -115,7 +140,7 @@ public class UserLogin extends JFrame {
      */
     private void $$$setupUI$$$() {
         panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(10, 7, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(12, 7, new Insets(0, 0, 0, 0), -1, -1));
         panel1.setBackground(new Color(-3479560));
         usernameLabel = new JLabel();
         usernameLabel.setBackground(new Color(-16777216));
@@ -123,16 +148,16 @@ public class UserLogin extends JFrame {
         if (usernameLabelFont != null) usernameLabel.setFont(usernameLabelFont);
         usernameLabel.setForeground(new Color(-16777216));
         usernameLabel.setText("Usuario");
-        panel1.add(usernameLabel, new GridConstraints(3, 1, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel1.add(usernameLabel, new GridConstraints(5, 1, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         registerButton = new JButton();
         registerButton.setBackground(new Color(-14918244));
         Font registerButtonFont = this.$$$getFont$$$("Century Gothic", Font.BOLD, 14, registerButton.getFont());
         if (registerButtonFont != null) registerButton.setFont(registerButtonFont);
         registerButton.setForeground(new Color(-1));
         registerButton.setText("Registrarse");
-        panel1.add(registerButton, new GridConstraints(8, 3, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel1.add(registerButton, new GridConstraints(10, 3, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
-        panel1.add(spacer1, new GridConstraints(0, 6, 10, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        panel1.add(spacer1, new GridConstraints(0, 6, 12, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         loginButton = new JButton();
         loginButton.setBackground(new Color(-14918244));
         loginButton.setBorderPainted(true);
@@ -141,15 +166,13 @@ public class UserLogin extends JFrame {
         if (loginButtonFont != null) loginButton.setFont(loginButtonFont);
         loginButton.setForeground(new Color(-1));
         loginButton.setText("Ingresar");
-        panel1.add(loginButton, new GridConstraints(8, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final Spacer spacer2 = new Spacer();
-        panel1.add(spacer2, new GridConstraints(2, 2, 1, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel1.add(loginButton, new GridConstraints(10, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         passwordLabel = new JLabel();
         Font passwordLabelFont = this.$$$getFont$$$("Century Gothic", Font.BOLD, 14, passwordLabel.getFont());
         if (passwordLabelFont != null) passwordLabel.setFont(passwordLabelFont);
         passwordLabel.setForeground(new Color(-16777216));
         passwordLabel.setText("Contraseña");
-        panel1.add(passwordLabel, new GridConstraints(5, 1, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel1.add(passwordLabel, new GridConstraints(7, 1, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         passwordField = new JPasswordField();
         passwordField.setBackground(new Color(-1));
         passwordField.setColumns(35);
@@ -157,11 +180,11 @@ public class UserLogin extends JFrame {
         if (passwordFieldFont != null) passwordField.setFont(passwordFieldFont);
         passwordField.setForeground(new Color(-16777216));
         passwordField.setToolTipText("Contraseña");
-        panel1.add(passwordField, new GridConstraints(5, 2, 2, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel1.add(passwordField, new GridConstraints(7, 2, 2, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final Spacer spacer2 = new Spacer();
+        panel1.add(spacer2, new GridConstraints(0, 0, 12, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
-        panel1.add(spacer3, new GridConstraints(0, 0, 10, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
-        final Spacer spacer4 = new Spacer();
-        panel1.add(spacer4, new GridConstraints(9, 3, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel1.add(spacer3, new GridConstraints(11, 3, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         userNameFile = new JTextField();
         userNameFile.setBackground(new Color(-1));
         userNameFile.setColumns(35);
@@ -169,9 +192,9 @@ public class UserLogin extends JFrame {
         if (userNameFileFont != null) userNameFile.setFont(userNameFileFont);
         userNameFile.setForeground(new Color(-16777216));
         userNameFile.setToolTipText("Usuario");
-        panel1.add(userNameFile, new GridConstraints(3, 2, 2, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final Spacer spacer5 = new Spacer();
-        panel1.add(spacer5, new GridConstraints(7, 3, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel1.add(userNameFile, new GridConstraints(5, 2, 2, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final Spacer spacer4 = new Spacer();
+        panel1.add(spacer4, new GridConstraints(9, 3, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         exitButton = new JButton();
         exitButton.setBackground(new Color(-14918244));
         exitButton.setBorderPainted(false);
@@ -179,12 +202,19 @@ public class UserLogin extends JFrame {
         if (exitButtonFont != null) exitButton.setFont(exitButtonFont);
         exitButton.setForeground(new Color(-1));
         exitButton.setText("Salir");
-        panel1.add(exitButton, new GridConstraints(8, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel1.add(exitButton, new GridConstraints(10, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new GridConstraints(1, 2, 1, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final Spacer spacer6 = new Spacer();
-        panel1.add(spacer6, new GridConstraints(0, 2, 1, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final Spacer spacer5 = new Spacer();
+        panel1.add(spacer5, new GridConstraints(0, 2, 1, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final JLabel label1 = new JLabel();
+        label1.setBackground(new Color(-16777216));
+        Font label1Font = this.$$$getFont$$$("Century Gothic", Font.BOLD, 24, label1.getFont());
+        if (label1Font != null) label1.setFont(label1Font);
+        label1.setForeground(new Color(-16777216));
+        label1.setText("Iniciar Sesión");
+        panel1.add(label1, new GridConstraints(2, 2, 3, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
     }
 
     /**
@@ -215,6 +245,7 @@ public class UserLogin extends JFrame {
     public JComponent $$$getRootComponent$$$() {
         return panel1;
     }
+
 }
 
 
