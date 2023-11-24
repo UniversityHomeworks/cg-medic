@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="top.jonakls.cgmedic.app.history.History">
-  <grid id="27dc6" binding="panel1" layout-manager="GridLayoutManager" row-count="5" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="panel1" layout-manager="GridLayoutManager" row-count="7" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="536" height="693"/>
+      <xy x="20" y="20" width="548" height="693"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-3479560"/>
+    </properties>
     <border type="none"/>
     <children>
       <component id="9e42d" class="javax.swing.JLabel">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Century Gothic" size="14" style="1"/>
+          <foreground color="-16777216"/>
           <text value="Codigo del hitorial"/>
         </properties>
       </component>
       <vspacer id="89da8">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="1" row-span="4" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <grid id="2af3c" binding="infoPanenl" layout-manager="GridLayoutManager" row-count="8" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-3479560"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="51616" class="javax.swing.JLabel" binding="userName">
@@ -35,6 +41,8 @@
             </constraints>
             <properties>
               <enabled value="true"/>
+              <font name="Century Gothic" size="14" style="1"/>
+              <foreground color="-16777216"/>
               <text value="Primer Nombre *"/>
             </properties>
           </component>
@@ -45,6 +53,8 @@
               </grid>
             </constraints>
             <properties>
+              <background color="-1"/>
+              <foreground color="-16777216"/>
               <text value=""/>
             </properties>
           </component>
@@ -53,6 +63,8 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Century Gothic" size="14" style="1"/>
+              <foreground color="-16777216"/>
               <text value="Segundo Nombre"/>
             </properties>
           </component>
@@ -62,13 +74,18 @@
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1"/>
+              <foreground color="-16777216"/>
+            </properties>
           </component>
           <component id="97e75" class="javax.swing.JLabel" binding="textLastName">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Century Gothic" size="14" style="1"/>
+              <foreground color="-16777216"/>
               <text value="Primer apellido *"/>
             </properties>
           </component>
@@ -78,13 +95,18 @@
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1"/>
+              <foreground color="-16777216"/>
+            </properties>
           </component>
           <component id="584e3" class="javax.swing.JLabel" binding="textSecondLastName">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Century Gothic" size="14" style="1"/>
+              <foreground color="-16777216"/>
               <text value="Segundo apellido"/>
             </properties>
           </component>
@@ -94,13 +116,18 @@
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1"/>
+              <foreground color="-16777216"/>
+            </properties>
           </component>
           <component id="dcb31" class="javax.swing.JLabel" binding="textEmail">
             <constraints>
               <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Century Gothic" size="14" style="1"/>
+              <foreground color="-16777216"/>
               <text value="Correo"/>
             </properties>
           </component>
@@ -110,13 +137,18 @@
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1"/>
+              <foreground color="-16777216"/>
+            </properties>
           </component>
           <component id="723c8" class="javax.swing.JLabel" binding="textPhone">
             <constraints>
               <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Century Gothic" size="14" style="1"/>
+              <foreground color="-16777216"/>
               <text value="Telefono"/>
             </properties>
           </component>
@@ -126,13 +158,18 @@
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1"/>
+              <foreground color="-16777216"/>
+            </properties>
           </component>
           <component id="962d3" class="javax.swing.JLabel">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Century Gothic" size="14" style="1"/>
+              <foreground color="-16777216"/>
               <text value="Direccion"/>
             </properties>
           </component>
@@ -142,13 +179,18 @@
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1"/>
+              <foreground color="-16777216"/>
+            </properties>
           </component>
           <component id="5568c" class="javax.swing.JLabel">
             <constraints>
               <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Century Gothic" size="14" style="1"/>
+              <foreground color="-16777216"/>
               <text value="Ciudad"/>
             </properties>
           </component>
@@ -157,6 +199,8 @@
               <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-1"/>
+              <foreground color="-16777216"/>
               <model>
                 <item value="Seleccione"/>
                 <item value="Bogota"/>
@@ -170,9 +214,11 @@
       <grid id="acc95" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="2" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-3479560"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="ecedb" class="javax.swing.JLabel">
@@ -180,6 +226,8 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Century Gothic" size="14" style="1"/>
+              <foreground color="-16777216"/>
               <text value="Sexo"/>
             </properties>
           </component>
@@ -188,7 +236,9 @@
             <constraints>
               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-3479560"/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="6a557" class="javax.swing.JLabel">
@@ -196,6 +246,8 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
+                  <font name="Century Gothic" size="14" style="1"/>
+                  <foreground color="-16777216"/>
                   <text value="Estado civil"/>
                 </properties>
               </component>
@@ -204,6 +256,8 @@
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
+                  <background color="-1"/>
+                  <foreground color="-16777216"/>
                   <model>
                     <item value="Seleccione"/>
                     <item value="Soltero"/>
@@ -220,6 +274,8 @@
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-1"/>
+              <foreground color="-16777216"/>
               <model>
                 <item value="Seleccione"/>
                 <item value="Masculino"/>
@@ -233,9 +289,11 @@
       <grid id="2b75c" layout-manager="GridLayoutManager" row-count="5" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-3479560"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="51bdb" class="javax.swing.JLabel" binding="textDescription">
@@ -243,6 +301,8 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Century Gothic" size="14" style="1"/>
+              <foreground color="-16777216"/>
               <text value="Descripcion"/>
             </properties>
           </component>
@@ -255,7 +315,10 @@
             <children>
               <component id="987ff" class="javax.swing.JTextArea" binding="description">
                 <constraints/>
-                <properties/>
+                <properties>
+                  <background color="-1"/>
+                  <foreground color="-16777216"/>
+                </properties>
               </component>
             </children>
           </scrollpane>
@@ -264,6 +327,8 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Century Gothic" size="14" style="1"/>
+              <foreground color="-16777216"/>
               <text value="Diagnostico"/>
             </properties>
           </component>
@@ -273,13 +338,18 @@
                 <preferred-size width="150" height="50"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1"/>
+              <foreground color="-16777216"/>
+            </properties>
           </component>
           <component id="9f4e2" class="javax.swing.JLabel" binding="textTratment">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Century Gothic" size="14" style="1"/>
+              <foreground color="-16777216"/>
               <text value="Tratamiento"/>
             </properties>
           </component>
@@ -288,6 +358,8 @@
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Century Gothic" size="14" style="1"/>
+              <foreground color="-16777216"/>
               <text value="Enfermedades"/>
             </properties>
           </component>
@@ -296,6 +368,8 @@
               <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-1"/>
+              <foreground color="-16777216"/>
               <model>
                 <item value="Seleccione"/>
                 <item value="Bronquitis aguda"/>
@@ -312,13 +386,18 @@
                 <preferred-size width="150" height="50"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1"/>
+              <foreground color="-16777216"/>
+            </properties>
           </component>
           <component id="c4358" class="javax.swing.JLabel">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Century Gothic" size="14" style="1"/>
+              <foreground color="-16777216"/>
               <text value="Medicina"/>
             </properties>
           </component>
@@ -327,6 +406,8 @@
               <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-1"/>
+              <foreground color="-16777216"/>
               <model>
                 <item value="Selesccione"/>
                 <item value="zanamivir"/>
@@ -343,9 +424,11 @@
       <grid id="36e18" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="4" column="1" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="5" column="2" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-3479560"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="691b6" class="javax.swing.JButton" binding="infoHistory">
@@ -368,12 +451,40 @@
       </grid>
       <component id="78321" class="javax.swing.JTextField" binding="uuidTextField">
         <constraints>
-          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-1"/>
+          <foreground color="-16777216"/>
+        </properties>
       </component>
+      <vspacer id="5da68">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="4" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <hspacer id="a204c">
+        <constraints>
+          <grid row="0" column="0" row-span="6" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <hspacer id="170ce">
+        <constraints>
+          <grid row="1" column="4" row-span="5" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <vspacer id="7affe">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="5" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <hspacer id="f1293">
+        <constraints>
+          <grid row="1" column="5" row-span="5" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
     </children>
   </grid>
 </form>

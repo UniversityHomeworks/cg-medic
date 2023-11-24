@@ -2,9 +2,16 @@ package top.jonakls.cgmedic.app.history;
 
 import top.jonakls.cgmedic.api.entity.user.UserEntity;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.WindowConstants;
 
 public class History  extends JFrame{
 
@@ -47,33 +54,29 @@ public class History  extends JFrame{
 
     public  History(){
         super("History");
-        setContentPane(panel1);
-        infoHistory.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String id = uuidTextField.getText();
-                String userName = userNameTextFile.getText();
-                String userSecondName = secondNameTextFile.getText();
-                String userLastName = lastNameTextFiled.getText();
-                String usersecondLastName = secondLastNameTextFiled.getText();
-                String userEmail = emailTextFiled.getText();
-                String userphone = phoneTextFiled.getText();
-                String userAddress = addressTextField.getText();
-                String userCity = (String) cityComBox.getSelectedItem();
+        super.setContentPane(panel1);
+        super.setSize(720, 1000);
 
 
-                UserEntity.createBasic(id,userName,userLastName,userEmail,userphone);
-                showMessageDialog(userName);
-                dispose();
-            }
+        infoHistory.addActionListener(e -> {
+            String id = uuidTextField.getText();
+            String userName = userNameTextFile.getText();
+            String userSecondName = secondNameTextFile.getText();
+            String userLastName = lastNameTextFiled.getText();
+            String userSecondLastName = secondLastNameTextFiled.getText();
+            String userEmail = emailTextFiled.getText();
+            String userPhone = phoneTextFiled.getText();
+            String userAddress = addressTextField.getText();
+            String userCity = (String) cityComBox.getSelectedItem();
+
+
+            UserEntity.createBasic(id,userName,userLastName,userEmail,userPhone);
+            showMessageDialog(userName);
+            dispose();
         });
     }
     private void showMessageDialog(String userName) {
         JOptionPane.showMessageDialog(this,"¡Informacion Guardada, " + userName + "!", "Gracias",JOptionPane.INFORMATION_MESSAGE);
-        // TODO: place custom component creation code here
-
-
-
-
+        this.dispose();
     }
 }

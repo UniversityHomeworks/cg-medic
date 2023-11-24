@@ -18,6 +18,7 @@ public class UserEntity implements MedicEntity {
     private String phone;
     private String address;
     private String city;
+    private String genre;
     private final Map<String, HistoryEntity> history;
 
     public UserEntity(
@@ -144,6 +145,14 @@ public class UserEntity implements MedicEntity {
     @Override
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public Iterator<HistoryEntity> historyIterator() {
